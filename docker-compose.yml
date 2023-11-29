@@ -14,7 +14,7 @@ services:
     build: flask-app/
     container_name: web
     # connect the src folder in on the host machine to the code folder in the container. 
-    # note that the code folder in contaier is the working directory (see DockerFile).
+    # note that the code folder in container is the working directory (see DockerFile).
     volumes: ['./flask-app:/code', './secrets:/secrets'] 
 
     # have the container restart if it fails for some reason. 
@@ -62,15 +62,15 @@ services:
 
   ##################################################################
   # configure the AppSmith container (borrowed directly from Appsmith)
-#    appsmith:
-#      image: index.docker.io/appsmith/appsmith-ce
-#      container_name: appsmith
-#      ports:
-#        - "8080:80"
-#        - "4443:443"
-#      volumes:
-#        - ./stacks:/appsmith-stacks
-#      restart: unless-stopped
+   appsmith:
+     image: index.docker.io/appsmith/appsmith-ce
+     container_name: appsmith
+     ports:
+       - "8080:80"
+       - "4443:443"
+     volumes:
+       - ./stacks:/appsmith-stacks
+     restart: unless-stopped
 
 secrets:
   secret_db_pw:
