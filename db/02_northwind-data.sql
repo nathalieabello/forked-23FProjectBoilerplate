@@ -607,7 +607,7 @@ INSERT INTO `strings` (`string_id`, `string_data`) VALUES (36, 'Cannot post prod
 INSERT INTO `strings` (`string_id`, `string_data`) VALUES (37, 'Do you want to post received product to inventory?');
 INSERT INTO `strings` (`string_id`, `string_data`) VALUES (38, 'Initialize purchase, orders, and inventory data?');
 INSERT INTO `strings` (`string_id`, `string_data`) VALUES (39, 'Must first specify employee name!');
-INSERT INTO `strings` (`string_id`, `string_data`) VALUES (40, 'Specified user must be logged in to approve purchase!');
+INSERT INTO `strings` (`string_id`, `string_data`) VALUES (40, 'Specified users must be logged in to approve purchase!');
 INSERT INTO `strings` (`string_id`, `string_data`) VALUES (41, 'Purchase order must contain completed line items before it can be approved');
 INSERT INTO `strings` (`string_id`, `string_data`) VALUES (42, 'Sorry, you do not have permission to approve purchases.');
 INSERT INTO `strings` (`string_id`, `string_data`) VALUES (43, 'Purchase successfully approved');

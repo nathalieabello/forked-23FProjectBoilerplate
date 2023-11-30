@@ -6,8 +6,8 @@
 DROP DATABASE IF EXISTS Shmoop;
 CREATE DATABASE IF NOT EXISTS Shmoop;
 
--- Via the Docker Compose file, a special user called webapp will
--- be created in MySQL. We are going to grant that user
+-- Via the Docker Compose file, a special users called webapp will
+-- be created in MySQL. We are going to grant that users
 -- all privilages to the new database we just created.
 -- TODO: If you changed the name of the database above, you need
 -- to change it here too.
@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS Posts
 
 
 -- Add sample data.
--- -- mock user data
+-- -- mock users data
 INSERT INTO GeneralUser
 (username, firstName, lastName, birthday, dateJoined, email, phone, sex, street, state, zip, country, height, weight)
 VALUES ('aniceberg', 'Aidan', 'Niceberg', '2002-07-28', '2023-11-02', 'aniceberg@gmail.com', '9876655432', 'M',
