@@ -1,11 +1,11 @@
 from flask import Blueprint, request, jsonify, current_app
-import db
+from src import db
 
-user = Blueprint('users', __name__)
+users = Blueprint('users', __name__)
 
 
 # Get all the users from Shmoop
-@user.route('/users', methods=['GET'])
+@users.route('/users', methods=['GET'])
 def get_users():
     # get a cursor object from the database
     cursor = db.get_db().cursor()
@@ -33,7 +33,7 @@ def get_users():
 
 
 #### get users given username
-@user.route('/users/<username>', methods=['GET'])
+@users.route('/users/<username>', methods=['GET'])
 def get_user(username):
     query = ('SELECT username, firstName, lastName, birthday, dateJoined,'
              ' email, phone, sex, street, state, zip, country, height, weight FROM GeneralUser '
@@ -51,7 +51,7 @@ def get_user(username):
 
 
 #### add a users to users
-@user.route('/newUser', methods=['POST'])
+@users.route('/newUser', methods=['POST'])
 def add_user():
     # collecting data from the request object
     the_data = request.json
@@ -99,7 +99,7 @@ def add_user():
 
 
 ### Get all usernames
-@user.route('/usernames', methods=['GET'])
+@users.route('/usernames', methods=['GET'])
 def get_all_usernames():
     query = 'SELECT DISTINCT username FROM GeneralUser'
 
