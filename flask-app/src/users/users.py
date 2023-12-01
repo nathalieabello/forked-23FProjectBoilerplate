@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
-from src import db
-from src import dao
+from src import db, dao
+from src.errors import NotFoundException
 
 users = Blueprint('users', __name__)
 
@@ -24,7 +24,7 @@ def get_user(username):
              f'WHERE username = \'{username}\'')
     data = dao.retrieve(query)
     if len(data) != 1:
-        raise Exception(code=404, description="User not found")
+        raise NotFoundException("User not found")
     return jsonify(data[0])
 
 
@@ -70,7 +70,32 @@ def add_user():
     current_app.logger.info(query)
 
     # executing and committing the insert statement
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-    db.get_db().commit()
+    dao.insert(query)
     return 'Success!'
+
+def get_steps(username):
+    query = f"""
+    SELECT date, stepCount
+    FROM DailySteps
+    WHERE username = '{username}'
+    ORDER BY date ASC
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
+
+def add_steps(username, date, count):
+    query = f"""
+    INSERT INTO DailySteps (username, date, stepCount)
+    VALUES ('{username}', '{date}', {count})
+    """
+    dao.insert(query)
+
+@users.route('/users/<username>/steps', methods=['GET', 'POST'])
+def steps(username):
+    if request.method == 'GET':
+        return get_steps(username)
+    else:
+        date = request.json.get('date')
+        count = request.json.get('stepCount')
+        add_steps(username, date, count)
+        return 'Success'

@@ -26,3 +26,11 @@ def retrieve(query):
         json_data.append(dict(zip(column_headers, row)))
     
     return json_data
+
+"""
+Inserts values into the db
+"""
+def insert(query):
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
