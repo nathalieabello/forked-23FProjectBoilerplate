@@ -67,6 +67,7 @@ def add_user():
     phone = the_data['phone']
     sex = the_data['sex']
     street = the_data['street']
+    state = the_data['state']
     zip = the_data['zip']
     country = the_data['country']
     height = the_data['height']
@@ -85,6 +86,7 @@ def add_user():
     query += phone + '", "'
     query += sex + '", "'
     query += street + '", "'
+    query += state + '", "'
     query += zip + '", "'
     query += country + '", "'
     query += str(height) + '", '
