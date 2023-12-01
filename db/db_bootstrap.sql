@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS GeneralUser
     firstName  VARCHAR(255) NOT NULL,
     lastName   VARCHAR(255) NOT NULL,
     birthday   DATE         NOT NULL,
-    dateJoined DATETIME     NOT NULL,
+    dateJoined DATETIME     DEFAULT NOW(),
     email      VARCHAR(255) NOT NULL,
     phone      VARCHAR(10)  NOT NULL,
     sex        CHAR(1)      NOT NULL,
