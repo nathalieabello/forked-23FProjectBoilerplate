@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app
 from src import db
+from src import dao
 
 users = Blueprint('users', __name__)
 
@@ -7,29 +8,12 @@ users = Blueprint('users', __name__)
 # Get all the users from Shmoop
 @users.route('/users', methods=['GET'])
 def get_users():
-    # get a cursor object from the database
-    cursor = db.get_db().cursor()
-
-    # use cursor to query the database for a list of products
-    cursor.execute('SELECT username, firstName, lastName, birthday, dateJoined, '
-                   'email, phone, sex, street, state, zip, country, height, weight FROM GeneralUser')
-
-    # grab the column headers from the returned data
-    column_headers = [x[0] for x in cursor.description]
-
-    # create an empty dictionary object to use in
-    # putting column headers together with data
-    json_data = []
-
-    # fetch all the data from the cursor
-    theData = cursor.fetchall()
-
-    # for each of the rows, zip the data elements together with
-    # the column headers.
-    for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
-
-    return jsonify(json_data)
+    query = """
+    SELECT username, firstName, lastName, birthday, dateJoined, email, phone, sex, street, state, zip, country, height, weight
+    FROM GeneralUser
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
 
 
 #### get users given username
@@ -37,17 +21,11 @@ def get_users():
 def get_user(username):
     query = ('SELECT username, firstName, lastName, birthday, dateJoined,'
              ' email, phone, sex, street, state, zip, country, height, weight FROM GeneralUser '
-             ' WHERE username = %s')
-    current_app.logger.info(query)
-
-    cursor = db.get_db().cursor()
-    cursor.execute(query, (username,))
-    column_headers = [x[0] for x in cursor.description]
-    json_data = []
-    the_data = cursor.fetchall()
-    for row in the_data:
-        json_data.append(dict(zip(column_headers, row)))
-    return jsonify(json_data)
+             f'WHERE username = \'{username}\'')
+    data = dao.retrieve(query)
+    if len(data) != 1:
+        raise Exception(code=404, description="User not found")
+    return jsonify(data[0])
 
 
 #### add a users to users
@@ -98,22 +76,3 @@ def add_user():
     cursor.execute(query)
     db.get_db().commit()
     return 'Success!'
-
-
-### Get all usernames
-@users.route('/usernames', methods=['GET'])
-def get_all_usernames():
-    query = 'SELECT DISTINCT username FROM GeneralUser'
-
-    cursor = db.get_db().cursor()
-    cursor.execute(query)
-
-    json_data = []
-    # fetch all the column headers and then all the data from the cursor
-    column_headers = [x[0] for x in cursor.description]
-    theData = cursor.fetchall()
-    # zip headers and data together into dictionary and then append to json data dict.
-    for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
-
-    return jsonify(json_data)
