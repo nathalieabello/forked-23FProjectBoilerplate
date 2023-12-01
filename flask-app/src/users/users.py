@@ -40,7 +40,6 @@ def add_user():
     firstName = the_data['first_name']
     lastName = the_data['last_name']
     birthday = the_data['birthday']
-    dateJoined = the_data['date_joined']
     email = the_data['email']
     phone = the_data['phone']
     sex = the_data['sex']
@@ -52,14 +51,13 @@ def add_user():
     weight = the_data['weight']
 
     # Constructing the query
-    query = ('INSERT INTO GeneralUser (username, firstName, lastName, birthday, dateJoined, '
+    query = ('INSERT INTO GeneralUser (username, firstName, lastName, birthday, '
              ' email, phone, sex, street, state, zip, country, height, weight) '
              ' VALUES ("')
     query += username + '", "'
     query += firstName + '", "'
     query += lastName + '", "'
     query += birthday + '", "'
-    query += dateJoined + '", "'
     query += email + '", "'
     query += phone + '", "'
     query += sex + '", "'
