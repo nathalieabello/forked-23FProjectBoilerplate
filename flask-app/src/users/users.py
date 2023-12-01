@@ -1,13 +1,12 @@
-from flask import Blueprint, request, jsonify, make_response, current_app
-import json
-import db
+from flask import Blueprint, request, jsonify, current_app
+from src import db
 
-user = Blueprint('user', __name__)
+users = Blueprint('users', __name__)
 
 
-# Get all the products from the database
-@user.route('/user', methods=['GET'])
-def get_products():
+# Get all the users from Shmoop
+@users.route('/users', methods=['GET'])
+def get_users():
     # get a cursor object from the database
     cursor = db.get_db().cursor()
 
@@ -33,25 +32,27 @@ def get_products():
     return jsonify(json_data)
 
 
-@user.route('/user/<id>', methods=['GET'])
-def get_product_detail(user):
+#### get users given username
+@users.route('/users/<username>', methods=['GET'])
+def get_user(username):
     query = ('SELECT username, firstName, lastName, birthday, dateJoined,'
              ' email, phone, sex, street, state, zip, country, height, weight FROM GeneralUser '
-             ' WHERE username = ' + str(id))
+             ' WHERE username = %s')
     current_app.logger.info(query)
 
     cursor = db.get_db().cursor()
-    cursor.execute(query)
+    cursor.execute(query, (username,))
     column_headers = [x[0] for x in cursor.description]
     json_data = []
     the_data = cursor.fetchall()
     for row in the_data:
         json_data.append(dict(zip(column_headers, row)))
-        return jsonify(json_data)
+    return jsonify(json_data)
 
 
-@user.route('/newUser', methods=['POST'])
-def add_new_product():
+#### add a users to users
+@users.route('/newUser', methods=['POST'])
+def add_user():
     # collecting data from the request object
     the_data = request.json
     current_app.logger.info(the_data)
@@ -74,7 +75,7 @@ def add_new_product():
     # Constructing the query
     query = ('INSERT INTO GeneralUser (username, firstName, lastName, birthday, dateJoined, '
              ' email, phone, sex, street, state, zip, country, height, weight) '
-             ' VALUES ("' )
+             ' VALUES ("')
     query += username + '", "'
     query += firstName + '", "'
     query += lastName + '", "'
@@ -98,10 +99,10 @@ def add_new_product():
 
 
 ### Get all usernames
-@user.route('/usernames', methods=['GET'])
-def get_all_categories():
+@users.route('/usernames', methods=['GET'])
+def get_all_usernames():
     query = 'SELECT DISTINCT username FROM GeneralUser'
-        
+
     cursor = db.get_db().cursor()
     cursor.execute(query)
 
