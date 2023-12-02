@@ -5,8 +5,6 @@ from src.errors import NotFoundException
 users = Blueprint('users', __name__)
 
 
-# Get all the users from Shmoop
-@users.route('/users', methods=['GET'])
 def get_users():
     query = """
     SELECT username, firstName, lastName, birthday, dateJoined, email, phone, sex, street, state, zip, country, height, weight
@@ -15,24 +13,9 @@ def get_users():
     data = dao.retrieve(query)
     return jsonify(data)
 
-
-#### get users given username
-@users.route('/users/<username>', methods=['GET'])
-def get_user(username):
-    query = ('SELECT username, firstName, lastName, birthday, dateJoined,'
-             ' email, phone, sex, street, state, zip, country, height, weight FROM GeneralUser '
-             f'WHERE username = \'{username}\'')
-    data = dao.retrieve(query)
-    if len(data) != 1:
-        raise NotFoundException("User not found")
-    return jsonify(data[0])
-
-
-#### add a users to users
-@users.route('/newUser', methods=['POST'])
-def add_user():
+def add_user(req):
     # collecting data from the request object
-    the_data = request.json
+    the_data = req.json
     current_app.logger.info(the_data)
 
     # extracting the variable
@@ -72,6 +55,60 @@ def add_user():
     # executing and committing the insert statement
     dao.insert(query)
     return 'Success!'
+
+# Get all the users from Shmoop
+@users.route('/users', methods=['GET', 'POST'])
+def handle_users():
+    if request.method == 'GET':
+        return get_users()
+    elif request.method == 'POST':
+        return add_user(request)
+
+
+def get_user(username):
+    query = ('SELECT username, firstName, lastName, birthday, dateJoined,'
+             ' email, phone, sex, street, state, zip, country, height, weight FROM GeneralUser '
+             f'WHERE username = \'{username}\'')
+    data = dao.retrieve(query)
+    if len(data) != 1:
+        raise NotFoundException("User not found")
+    return jsonify(data[0])
+
+def update_user(username, req):
+    data = req.json
+    updates_dict = {
+        "firstName": f"'{data['first_name']}'" if 'first_name' in data else None,
+        "lastName": f"'{data['last_name']}'" if 'last_name' in data else None,
+        "birthday": f"'{data['birthday']}'" if 'birthday' in data else None,
+        "email": f"'{data['email']}'" if 'email' in data else None,
+        "phone": f"'{data['phone']}'" if 'phone' in data else None,
+        "sex": f"'{data['sex']}'" if 'sex' in data else None,
+        "street": f"'{data['street']}'" if 'street' in data else None,
+        "state": f"'{data['state']}'" if 'state' in data else None,
+        "zip": f"'{data['zip']}'" if 'zip' in data else None,
+        "country": f"'{data['country']}'" if 'country' in data else None,
+        "height": data.get('height'),
+        "weight": data.get('weight')
+    }
+    updates = [f"{key} = {value}" for key, value in updates_dict.items() if value is not None]
+
+    query = f"""
+    UPDATE GeneralUser
+    SET {", ".join(updates)}
+    WHERE username = '{username}'
+    """
+    dao.insert(query)
+    return 'Success'
+
+
+#### get users given username
+@users.route('/users/<username>', methods=['GET', 'PUT'])
+def handle_user(username):
+    if request.method == 'GET':
+        return get_user(username)
+    else:
+        return update_user(username, request)
+    
 
 def get_steps(username):
     query = f"""
