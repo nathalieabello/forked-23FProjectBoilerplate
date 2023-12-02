@@ -75,7 +75,7 @@ def add_user():
 
 def get_steps(username):
     query = f"""
-    SELECT date, stepCount
+    SELECT id, date, stepCount
     FROM DailySteps
     WHERE username = '{username}'
     ORDER BY date ASC
@@ -98,4 +98,65 @@ def steps(username):
         date = request.json.get('date')
         count = request.json.get('stepCount')
         add_steps(username, date, count)
+        return 'Success'
+
+
+def get_macros(username):
+    query = f"""
+    SELECT id, date, calorieCount, proteinCount, carbCount, fatCount
+    FROM DailyMacros
+    WHERE username = '{username}'
+    ORDER BY date ASC
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
+
+def add_macros(username, date, calorieCount, proteinCount, carbCount, fatCount):
+    query = f"""
+    INSERT INTO DailyMacros (username, date, calorieCount, proteinCount, carbCount, fatCount)
+    VALUES ('{username}', '{date}', {calorieCount}, {proteinCount}, {carbCount}, {fatCount})
+    """
+    dao.insert(query)
+
+@users.route('/users/<username>/macros', methods=['GET', 'POST'])
+def macros(username):
+    if request.method == 'GET':
+        return get_macros(username)
+    else:
+        date = request.json.get('date')
+        calories = request.json.get('calorieCount')
+        protein = request.json.get('proteinCount')
+        carbs = request.json.get('carbCount')
+        fats = request.json.get('fatCount')
+        add_macros(username, date, calories, protein, carbs, fats)
+        return 'Success'
+
+
+def get_sleep(username):
+    query = f"""
+    SELECT id, datetimeStarted, datetimeEnded, REMTime, NREMTime
+    FROM SleepInfo
+    WHERE username = '{username}'
+    ORDER BY datetimeStarted ASC
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
+
+def add_sleep(username, datetimeStarted, datetimeEnded, REMTime, NREMTime):
+    query = f"""
+    INSERT INTO SleepInfo (username, datetimeStarted, datetimeEnded, REMTime, NREMTime)
+    VALUES ('{username}', '{datetimeStarted}', '{datetimeEnded}', {REMTime}, {NREMTime})
+    """
+    dao.insert(query)
+
+@users.route('/users/<username>/sleep', methods=['GET', 'POST'])
+def sleep(username):
+    if request.method == 'GET':
+        return get_sleep(username)
+    else:
+        datetimeStarted = request.json.get('datetimeStarted')
+        datetimeEnded = request.json.get('datetimeEnded')
+        REMTime = request.json.get('REMTime')
+        NREMTime = request.json.get('NREMTime')
+        add_sleep(username, datetimeStarted, datetimeEnded, REMTime, NREMTime)
         return 'Success'
