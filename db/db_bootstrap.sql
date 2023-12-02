@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS GeneralUser
     firstName  VARCHAR(255) NOT NULL,
     lastName   VARCHAR(255) NOT NULL,
     birthday   DATE         NOT NULL,
-    dateJoined DATETIME     DEFAULT NOW(),
+    dateJoined DATETIME DEFAULT NOW(),
     email      VARCHAR(255) NOT NULL,
     phone      VARCHAR(10)  NOT NULL,
     sex        CHAR(1)      NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS SleepInfo
 CREATE TABLE IF NOT EXISTS PersonalTrainer
 (
     username       VARCHAR(255) PRIMARY KEY,
-    qualifiedSince DATE NOT NULL,
+    qualifiedSince DATETIME DEFAULT NOW(),
     FOREIGN KEY (username) REFERENCES GeneralUser (username)
         ON UPDATE CASCADE ON DELETE RESTRICT
 );
