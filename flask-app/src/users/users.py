@@ -4,7 +4,7 @@ from src.errors import NotFoundException
 
 users = Blueprint('users', __name__)
 
-
+# gets users from db
 def get_users():
     query = """
     SELECT username, firstName, lastName, birthday, dateJoined, email, phone, sex, street, state, zip, country, height, weight
@@ -13,6 +13,7 @@ def get_users():
     data = dao.retrieve(query)
     return jsonify(data)
 
+# adds a user to the db
 def add_user(req):
     # collecting data from the request object
     the_data = req.json
@@ -65,6 +66,7 @@ def handle_users():
         return add_user(request)
 
 
+# given a username, gets the user from the db and returns it
 def get_user(username):
     query = ('SELECT username, firstName, lastName, birthday, dateJoined,'
              ' email, phone, sex, street, state, zip, country, height, weight FROM GeneralUser '
@@ -74,6 +76,7 @@ def get_user(username):
         raise NotFoundException("User not found")
     return jsonify(data[0])
 
+# given a username, updates that user's info
 def update_user(username, req):
     data = req.json
     updates_dict = {
@@ -109,7 +112,7 @@ def handle_user(username):
     else:
         return update_user(username, request)
     
-
+# given a username, gets steps for that user
 def get_steps(username):
     query = f"""
     SELECT id, date, stepCount
@@ -120,6 +123,7 @@ def get_steps(username):
     data = dao.retrieve(query)
     return jsonify(data)
 
+# given a username, adds a step entry to the db for that user
 def add_steps(username, date, count):
     query = f"""
     INSERT INTO DailySteps (username, date, stepCount)
@@ -127,6 +131,7 @@ def add_steps(username, date, count):
     """
     dao.insert(query)
 
+# add or retrieve step info
 @users.route('/users/<username>/steps', methods=['GET', 'POST'])
 def steps(username):
     if request.method == 'GET':
@@ -137,7 +142,7 @@ def steps(username):
         add_steps(username, date, count)
         return 'Success'
 
-
+# given a username, gets all daily macros information for that user
 def get_macros(username):
     query = f"""
     SELECT id, date, calorieCount, proteinCount, carbCount, fatCount
@@ -148,6 +153,7 @@ def get_macros(username):
     data = dao.retrieve(query)
     return jsonify(data)
 
+# given a username, adds a daily macros entry to the db for that user
 def add_macros(username, date, calorieCount, proteinCount, carbCount, fatCount):
     query = f"""
     INSERT INTO DailyMacros (username, date, calorieCount, proteinCount, carbCount, fatCount)
@@ -155,6 +161,7 @@ def add_macros(username, date, calorieCount, proteinCount, carbCount, fatCount):
     """
     dao.insert(query)
 
+# add and retreive daily macro information for a user
 @users.route('/users/<username>/macros', methods=['GET', 'POST'])
 def macros(username):
     if request.method == 'GET':
@@ -168,7 +175,7 @@ def macros(username):
         add_macros(username, date, calories, protein, carbs, fats)
         return 'Success'
 
-
+# given a username, gets all daily sleep info for that user
 def get_sleep(username):
     query = f"""
     SELECT id, datetimeStarted, datetimeEnded, REMTime, NREMTime
@@ -179,6 +186,7 @@ def get_sleep(username):
     data = dao.retrieve(query)
     return jsonify(data)
 
+# given a username, adds a daily sleep entry into the db for that user
 def add_sleep(username, datetimeStarted, datetimeEnded, REMTime, NREMTime):
     query = f"""
     INSERT INTO SleepInfo (username, datetimeStarted, datetimeEnded, REMTime, NREMTime)
@@ -186,6 +194,7 @@ def add_sleep(username, datetimeStarted, datetimeEnded, REMTime, NREMTime):
     """
     dao.insert(query)
 
+# add and retrieve sleep information for a given user
 @users.route('/users/<username>/sleep', methods=['GET', 'POST'])
 def sleep(username):
     if request.method == 'GET':
