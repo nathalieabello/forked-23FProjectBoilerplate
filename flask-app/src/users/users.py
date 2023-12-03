@@ -150,6 +150,40 @@ def steps(username):
         return 'Success'
 
 
+# given an id, updates a step
+def update_steps(username, id, date = None, stepCount = None):
+    updates = ""
+    if date and stepCount:
+        updates += f"date = '{date}', stepCount = {stepCount}"
+    elif date:
+        updates += f"date = '{date}'"
+    elif stepCount:
+        updates += f"stepCount = {stepCount}"
+    
+    query = f"""
+    UPDATE DailySteps
+    SET {updates}
+    WHERE username = '{username}' AND id = {id}
+    """
+
+    dao.execute(query)
+
+# given an id, deletes a step
+def delete_steps(username, id):
+    query = f"DELETE FROM DailySteps WHERE username = '{username}' AND id = {id}"
+    dao.execute(query)
+
+# given an id, updates or deletes that daily steps entry
+@users.route('/users/<username>/steps/<id>', methods=['PUT', 'DELETE'])
+def step(username, id):
+    if request.method == 'PUT':
+        date = request.json.get('date')
+        stepCount = request.json.get('stepCount')
+        update_steps(username, id, date, stepCount)
+        return 'Success'
+    elif request.method == 'DELETE':
+        delete_steps(username, id)
+
 # given a username, gets all daily macros information for that user
 def get_macros(username):
     query = f"""
@@ -185,6 +219,37 @@ def macros(username):
         add_macros(username, date, calories, protein, carbs, fats)
         return 'Success'
 
+# given an id, updates a step
+def update_macros(username, id, date = None, calories = None, protein = None, carbs = None, fats = None):
+    if date:
+        date = f"'{date}'"
+    updates = list(filter(lambda x: True if x is not None else False, [date, calories, protein, carbs, fats]))
+    query = f"""
+    UPDATE DailyMacros
+    SET {", ".join(updates)}
+    WHERE username = '{username}' AND id = {id}
+    """
+    dao.execute(query)
+
+# given an id, deletes a step
+def delete_macros(username, id):
+    query = f"DELETE FROM DailyMacros WHERE username = '{username}' AND id = {id}"
+    dao.execute(query)
+
+# given an id, updates or deletes that daily steps entry
+@users.route('/users/<username>/macros/<id>', methods=['PUT', 'DELETE'])
+def macro(username, id):
+    if request.method == 'PUT':
+        date = request.json.get('date')
+        calories = request.json.get('calorieCount')
+        protein = request.json.get('proteinCount')
+        carbs = request.json.get('carbCount')
+        fats = request.json.get('fatCount')
+        update_macros(username, id, date, calories, protein, carbs, fats)
+        return 'Success'
+    elif request.method == 'DELETE':
+        delete_macros(username, id)
+        return 'Success'
 
 # given a username, gets all daily sleep info for that user
 def get_sleep(username):
@@ -266,3 +331,37 @@ def delete_goal(username, goalID):
 def goal(username, goalID):
     if request.method == 'DELETE':
         return delete_goal(username, goalID)
+
+
+# given a username and an id, updates a sleep info
+def update_sleep(username, id, datetimeStarted = None, datetimeEnded = None, REMTime = None, NREMTime = None):
+    if datetimeStarted:
+        datetimeStarted = f"'{datetimeStarted}'"
+    if datetimeEnded:
+        datetimeEnded = f"'{datetimeEnded}'"
+    updates = list(filter(lambda x: True if x is not None else False, [datetimeStarted, datetimeEnded, REMTime, NREMTime]))
+    query = f"""
+    UPDATE SleepInfo
+    SET {", ".join(updates)}
+    WHERE username = '{username}' AND id = {id}
+    """
+    dao.execute(query)
+
+# given a username and an id, deletes a sleep info
+def delete_sleep(username, id):
+    query = f"DELETE FROM SleepInfo WHERE username = '{username}' AND id = {id}"
+    dao.execute(query)
+
+# given an id, updates or deletes that daily steps entry
+@users.route('/users/<username>/macros/<id>', methods=['PUT', 'DELETE'])
+def sleep_individual(username, id):
+    if request.method == 'PUT':
+        datetimeStarted = request.json.get('datetimeStarted')
+        datetimeEnded = request.json.get('datetimeEnded')
+        REMTime = request.json.get('REMTime')
+        NREMTime = request.json.get('NREMTime')
+        update_sleep(username, id, datetimeStarted, datetimeEnded, REMTime, NREMTime)
+        return 'Success'
+    elif request.method == 'DELETE':
+        delete_sleep(username, id)
+        return 'Success'
