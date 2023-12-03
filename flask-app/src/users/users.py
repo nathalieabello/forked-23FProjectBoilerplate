@@ -4,6 +4,7 @@ from src.errors import NotFoundException
 
 users = Blueprint('users', __name__)
 
+
 # gets users from db
 def get_users():
     query = """
@@ -12,6 +13,7 @@ def get_users():
     """
     data = dao.retrieve(query)
     return jsonify(data)
+
 
 # adds a user to the db
 def add_user(req):
@@ -57,6 +59,7 @@ def add_user(req):
     dao.execute(query)
     return 'Success!'
 
+
 # Get all the users from Shmoop
 @users.route('/users', methods=['GET', 'POST'])
 def handle_users():
@@ -75,6 +78,7 @@ def get_user(username):
     if len(data) != 1:
         raise NotFoundException("User not found")
     return jsonify(data[0])
+
 
 # given a username, updates that user's info
 def update_user(username, req):
@@ -111,7 +115,8 @@ def handle_user(username):
         return get_user(username)
     else:
         return update_user(username, request)
-    
+
+
 # given a username, gets steps for that user
 def get_steps(username):
     query = f"""
@@ -123,6 +128,7 @@ def get_steps(username):
     data = dao.retrieve(query)
     return jsonify(data)
 
+
 # given a username, adds a step entry to the db for that user
 def add_steps(username, date, count):
     query = f"""
@@ -130,6 +136,7 @@ def add_steps(username, date, count):
     VALUES ('{username}', '{date}', {count})
     """
     dao.execute(query)
+
 
 # add or retrieve step info
 @users.route('/users/<username>/steps', methods=['GET', 'POST'])
@@ -142,6 +149,7 @@ def steps(username):
         add_steps(username, date, count)
         return 'Success'
 
+
 # given a username, gets all daily macros information for that user
 def get_macros(username):
     query = f"""
@@ -153,6 +161,7 @@ def get_macros(username):
     data = dao.retrieve(query)
     return jsonify(data)
 
+
 # given a username, adds a daily macros entry to the db for that user
 def add_macros(username, date, calorieCount, proteinCount, carbCount, fatCount):
     query = f"""
@@ -160,6 +169,7 @@ def add_macros(username, date, calorieCount, proteinCount, carbCount, fatCount):
     VALUES ('{username}', '{date}', {calorieCount}, {proteinCount}, {carbCount}, {fatCount})
     """
     dao.execute(query)
+
 
 # add and retreive daily macro information for a user
 @users.route('/users/<username>/macros', methods=['GET', 'POST'])
@@ -175,6 +185,7 @@ def macros(username):
         add_macros(username, date, calories, protein, carbs, fats)
         return 'Success'
 
+
 # given a username, gets all daily sleep info for that user
 def get_sleep(username):
     query = f"""
@@ -186,6 +197,7 @@ def get_sleep(username):
     data = dao.retrieve(query)
     return jsonify(data)
 
+
 # given a username, adds a daily sleep entry into the db for that user
 def add_sleep(username, datetimeStarted, datetimeEnded, REMTime, NREMTime):
     query = f"""
@@ -193,6 +205,7 @@ def add_sleep(username, datetimeStarted, datetimeEnded, REMTime, NREMTime):
     VALUES ('{username}', '{datetimeStarted}', '{datetimeEnded}', {REMTime}, {NREMTime})
     """
     dao.execute(query)
+
 
 # add and retrieve sleep information for a given user
 @users.route('/users/<username>/sleep', methods=['GET', 'POST'])
@@ -206,3 +219,50 @@ def sleep(username):
         NREMTime = request.json.get('NREMTime')
         add_sleep(username, datetimeStarted, datetimeEnded, REMTime, NREMTime)
         return 'Success'
+
+
+# given a username, gets all goals for that user
+def get_goals(username):
+    query = f"""
+    SELECT id, description, status, username
+    FROM Goal
+    WHERE username = '{username}'
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
+
+
+# given a username, adds a goal entry into the db for that user
+def add_goal(username, description, status):
+    query = f"""
+    INSERT INTO Goal (username, description, status)
+    VALUES ('{username}', '{description}', '{status}')
+    """
+    dao.execute(query)
+
+
+# add and retrieve goal information for a given user
+@users.route('/users/<username>/goals', methods=['GET', 'POST'])
+def goals(username):
+    if request.method == 'GET':
+        return get_goals(username)
+    else:
+        description = request.json.get('description')
+        status = request.json.get('status')
+        add_goal(username, description, status)
+        return 'Success'
+
+
+def delete_goal(username, goalID):
+    query = f"""
+    DELETE FROM Goal
+    WHERE id = '{goalID}' AND username = '{username}'
+    """
+    dao.execute(query)
+    return 'Success'
+
+
+@users.route('/users/<username>/goals/<goalID>', methods=['DELETE'])
+def goal(username, goalID):
+    if request.method == 'DELETE':
+        return delete_goal(username, goalID)

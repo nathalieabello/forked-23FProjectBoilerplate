@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS Goal
     description VARCHAR(255) NOT NULL,
     status      VARCHAR(128) NOT NULL,
     username    VARCHAR(255) NOT NULL,
+    UNIQUE KEY (username, description),
     FOREIGN KEY (username) REFERENCES GeneralUser (username)
         ON UPDATE cascade
         ON DELETE restrict
