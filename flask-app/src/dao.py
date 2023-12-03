@@ -30,7 +30,7 @@ def retrieve(query):
 """
 Inserts values into the db
 """
-def insert(query):
+def execute(query):
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()

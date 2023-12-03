@@ -54,7 +54,7 @@ def add_user(req):
     current_app.logger.info(query)
 
     # executing and committing the insert statement
-    dao.insert(query)
+    dao.execute(query)
     return 'Success!'
 
 # Get all the users from Shmoop
@@ -100,7 +100,7 @@ def update_user(username, req):
     SET {", ".join(updates)}
     WHERE username = '{username}'
     """
-    dao.insert(query)
+    dao.execute(query)
     return 'Success'
 
 
@@ -129,7 +129,7 @@ def add_steps(username, date, count):
     INSERT INTO DailySteps (username, date, stepCount)
     VALUES ('{username}', '{date}', {count})
     """
-    dao.insert(query)
+    dao.execute(query)
 
 # add or retrieve step info
 @users.route('/users/<username>/steps', methods=['GET', 'POST'])
@@ -159,7 +159,7 @@ def add_macros(username, date, calorieCount, proteinCount, carbCount, fatCount):
     INSERT INTO DailyMacros (username, date, calorieCount, proteinCount, carbCount, fatCount)
     VALUES ('{username}', '{date}', {calorieCount}, {proteinCount}, {carbCount}, {fatCount})
     """
-    dao.insert(query)
+    dao.execute(query)
 
 # add and retreive daily macro information for a user
 @users.route('/users/<username>/macros', methods=['GET', 'POST'])
@@ -192,7 +192,7 @@ def add_sleep(username, datetimeStarted, datetimeEnded, REMTime, NREMTime):
     INSERT INTO SleepInfo (username, datetimeStarted, datetimeEnded, REMTime, NREMTime)
     VALUES ('{username}', '{datetimeStarted}', '{datetimeEnded}', {REMTime}, {NREMTime})
     """
-    dao.insert(query)
+    dao.execute(query)
 
 # add and retrieve sleep information for a given user
 @users.route('/users/<username>/sleep', methods=['GET', 'POST'])

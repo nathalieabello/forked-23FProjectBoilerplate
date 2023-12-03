@@ -30,7 +30,7 @@ def add_ingredient(name, calories, protein, carbs, fat, cholesterol):
     INSERT INTO Ingredient (name, calories, protein, carbs, fat, cholesterol)
     VALUES ('{name}', {calories}, {protein}, {carbs}, {fat}, {cholesterol})
     """
-    dao.insert(query)
+    dao.execute(query)
 
 
 #### get and create ingredients from the db
@@ -72,7 +72,7 @@ def update_ingredient(name, calories, protein, carbs, fat, cholesterol):
         SET calories = {calories}, protein = {protein}, carbs = {carbs}, fat = {fat}, cholesterol = {cholesterol}
         WHERE name = '{name}'
         """
-        dao.update(update_query)
+        dao.execute(update_query)
         return "Ingredient updated successfully."
     else:
         # Ingredient does not exist, handle accordingly (e.g., insert or raise an exception)
@@ -88,7 +88,7 @@ def remove_ingredient(name):
     if exists > 0:
         # Ingredient exists, perform the deletion
         delete_query = f"DELETE FROM Ingredient WHERE LOWER(name) = LOWER('{name}')"
-        dao.delete(delete_query)
+        dao.execute(delete_query)
         return "Ingredient removed successfully."
     else:
         # Ingredient does not exist, handle accordingly (e.g., raise an exception)
@@ -126,7 +126,7 @@ def add_recipe(title, directions, cooktime):
     INSERT INTO Recipe (title, directions, cookTime)
     VALUES ('{title}', {directions}, {cooktime})
     """
-    dao.insert(query)
+    dao.execute(query)
 
 
 #### get and create recipes from the db
@@ -165,7 +165,7 @@ def update_recipe(id, title, directions, cooktime):
         SET title = '{title}', directions = '{directions}', cookTime = '{cooktime}'
         WHERE recipeID = '{id}'
         """
-        dao.update(update_query)
+        dao.execute(update_query)
         return "Recipe updated successfully."
     else:
         # Recipe does not exist, handle accordingly (e.g., insert or raise an exception)
@@ -181,7 +181,7 @@ def remove_recipe(recipeID):
     if exists > 0:
         # Ingredient exists, perform the deletion
         delete_query = f"DELETE FROM Recipe WHERE recipeID = '{recipeID}'"
-        dao.delete(delete_query)
+        dao.execute(delete_query)
         return "Recipe removed successfully."
     else:
         # Ingredient does not exist, handle accordingly (e.g., raise an exception)
