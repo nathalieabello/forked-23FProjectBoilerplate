@@ -201,3 +201,16 @@ def recipe(id):
         return 'Success'
     else:
         return remove_ingredient(id)
+
+
+#### get, update, and delete clients from a Dietitian
+@dietitians.route('/clients', methods=['GET', 'PUT', 'DELETE'])
+def clients(username):
+    query = f"""
+    SELECT ClientUsername
+    FROM DietitianClient
+    WHERE DietitianUsername = '{username}'
+    """
+    data = dao.retrieve(query)
+    return jasonify(data)
+
