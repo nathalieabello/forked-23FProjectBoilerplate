@@ -207,9 +207,9 @@ def recipe(id):
 @dietitians.route('/clients', methods=['GET', 'PUT', 'DELETE'])
 def clients(username):
     query = f"""
-    SELECT ClientUsername
+    SELECT clientUsername
     FROM DietitianClient
-    WHERE DietitianUsername = '{username}'
+    WHERE dietitianUsername = '{username}'
     """
     data = dao.retrieve(query)
     return jasonify(data)
