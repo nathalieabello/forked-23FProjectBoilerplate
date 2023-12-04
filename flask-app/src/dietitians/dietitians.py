@@ -208,28 +208,28 @@ def recipe(id):
 def clients(username):
     if request.method == 'GET':
         return get_clients(username)
-    elif request.method == 'DELETE':
-        clientUsername = request.json.get('clientUsername')
-        return remove_client(username, clientUsername)
-    else:
-        clientUsername = request.json.get('clientUsername')
-        add_client(username, clientUsername)
-        return 'Success'
+#     elif request.method == 'DELETE':
+#         clientUsername = request.json.get('clientUsername')
+#         return remove_client(username, clientUsername)
+#     else:
+#         clientUsername = request.json.get('clientUsername')
+#         add_client(username, clientUsername)
+#         return 'Success'
 
-def add_client(dietitianUsername, clientUsername):
-    query = f"""
-    INSERT INTO DietitianClient (dietitianUsername, clientUsername)
-    VALUES ({dietitianUsername}, {clientUsername})
-    """
-    dao.execute(query)
-
-def remove_client(dietitianUsername, clientUsername):
-    delete_query = f"
-    DELETE FROM DietitianClient
-    WHERE dietitianUsername = '{dietitianUsername}' AND clientUsername = '{clientUsername}'
-    "
-    dao.execute(delete_query)
-    return "Ingredient removed successfully."
+# def add_client(dietitianUsername, clientUsername):
+#     query = f"""
+#     INSERT INTO DietitianClient (dietitianUsername, clientUsername)
+#     VALUES ({dietitianUsername}, {clientUsername})
+#     """
+#     dao.execute(query)
+#
+# def remove_client(dietitianUsername, clientUsername):
+#     delete_query = f"
+#     DELETE FROM DietitianClient
+#     WHERE dietitianUsername = '{dietitianUsername}' AND clientUsername = '{clientUsername}'
+#     "
+#     dao.execute(delete_query)
+#     return "Ingredient removed successfully."
 
 def get_clients(username):
     query = f"""
