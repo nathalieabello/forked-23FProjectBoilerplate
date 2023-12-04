@@ -204,7 +204,7 @@ def recipe(id):
 
 
 #### get, update, and delete clients from a Dietitian
-@dietitians.route('/clients', methods=['GET', 'PUT', 'DELETE'])
+@dietitians.route('/<username>/clients', methods=['GET', 'PUT', 'DELETE'])
 def clients(username):
     query = f"""
     SELECT clientUsername
