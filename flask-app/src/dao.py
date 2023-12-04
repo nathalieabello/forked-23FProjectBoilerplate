@@ -28,9 +28,18 @@ def retrieve(query):
     return json_data
 
 """
-Inserts values into the db
+Executes a query on the db
 """
 def execute(query):
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
+
+"""
+Inserts a single entity into the db and returns the id of the newly created entity
+"""
+def insert(query):
+    cursor = db.get_db().cursor()
+    cursor.execute(query)
+    db.get_db().commit()
+    return cursor.lastrowid
