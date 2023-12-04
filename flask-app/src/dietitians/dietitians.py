@@ -345,3 +345,21 @@ def get_recipe_and_ingredients(recipeID):
 @dietitians.route('/recipe_and_ingredients/<recipeID>', methods=['GET'])
 def recipe_and_ingredients(recipeID):
     return get_recipe_and_ingredients(recipeID)
+
+
+
+def get_ingredient_details(ingredientname):
+    query = f"""
+    SELECT name, calories, protein, carbs, fat, cholesterol
+    FROM Ingredient
+    WHERE name = '{ingredientname}'
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
+
+
+@dietitians.route('/ingredient_details/<ingredientname>', methods=['GET'])
+def ingredient_details(ingredientname):
+    return get_ingredient_details(ingredientname)
+
+
