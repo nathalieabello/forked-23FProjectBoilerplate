@@ -2,8 +2,8 @@ from flask import Blueprint, request, jsonify, make_response, current_app
 import json
 from src import db
 
-
 products = Blueprint('products', __name__)
+
 
 # Get all the products from the database
 @products.route('/products', methods=['GET'])
@@ -31,9 +31,9 @@ def get_products():
 
     return jsonify(json_data)
 
-@products.route('/product/<id>', methods=['GET'])
-def get_product_detail (id):
 
+@products.route('/product/<id>', methods=['GET'])
+def get_product_detail(id):
     query = 'SELECT id, product_name, description, list_price, category FROM products WHERE id = ' + str(id)
     current_app.logger.info(query)
 
@@ -45,7 +45,7 @@ def get_product_detail (id):
     for row in the_data:
         json_data.append(dict(zip(column_headers, row)))
     return jsonify(json_data)
-    
+
 
 # get the top 5 products from the database
 @products.route('/mostExpensive')
@@ -78,7 +78,6 @@ def get_most_pop_products():
 
 @products.route('/tenMostExpensive', methods=['GET'])
 def get_10_most_expensive_products():
-    
     query = '''
         SELECT product_code, product_name, list_price, reorder_level
         FROM products
@@ -102,17 +101,17 @@ def get_10_most_expensive_products():
     # the column headers. 
     for row in theData:
         json_data.append(dict(zip(column_headers, row)))
-    
+
     return jsonify(json_data)
+
 
 @products.route('/product', methods=['POST'])
 def add_new_product():
-    
-    # collecting data from the request object 
+    # collecting data from the request object
     the_data = request.json
     current_app.logger.info(the_data)
 
-    #extracting the variable
+    # extracting the variable
     name = the_data['product_name']
     description = the_data['product_description']
     price = the_data['product_price']
@@ -130,11 +129,12 @@ def add_new_product():
     cursor = db.get_db().cursor()
     cursor.execute(query)
     db.get_db().commit()
-    
+
     return 'Success!'
 
+
 ### Get all product categories
-@products.route('/categories', methods = ['GET'])
+@products.route('/categories', methods=['GET'])
 def get_all_categories():
     query = '''
         SELECT DISTINCT category AS label, category as value
@@ -153,5 +153,5 @@ def get_all_categories():
     # zip headers and data together into dictionary and then append to json data dict.
     for row in theData:
         json_data.append(dict(zip(column_headers, row)))
-    
+
     return jsonify(json_data)
