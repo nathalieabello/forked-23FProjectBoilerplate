@@ -212,5 +212,5 @@ def clients(username):
     WHERE dietitianUsername = '{username}'
     """
     data = dao.retrieve(query)
-    return jasonify(data)
+    return jsonify(data)
 
