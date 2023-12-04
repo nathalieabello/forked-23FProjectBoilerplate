@@ -214,3 +214,16 @@ def clients(username):
     data = dao.retrieve(query)
     return jsonify(data)
 
+# ### get, update, and delete clients from a Dietitian
+# @dietitians.route('/recipes/<recipe>/ingredients', methods=['GET', 'PUT', 'DELETE'])
+# def clients(recipeId):
+#     query = f"""
+#     SELECT ingredientName
+#     FROM Amount
+#     WHERE recipeId = '{recipeId}'
+#     """
+#     data = dao.retrieve(query)
+#     return jsonify(data)
+
+
+
