@@ -200,7 +200,7 @@ def recipe(id):
         update_recipe(id, title, directions, cooktime)
         return 'Success'
     else:
-        return remove_ingredient(id)
+        return remove_recipe(id)
 
 
 #### get, update, and delete clients from a Dietitian
@@ -311,7 +311,7 @@ def remove_diet(name):
         return "Diet not found in the database."
 
 
-#### get, update, and delete recipe from the db
+#### get, update, and delete diet from the db
 @dietitians.route('/diet/<name>', methods=['GET', 'PUT', 'DELETE'])
 def diet(name):
     if request.method == 'GET':
@@ -362,4 +362,33 @@ def get_ingredient_details(ingredientname):
 def ingredient_details(ingredientname):
     return get_ingredient_details(ingredientname)
 
+def calculate_recipe_nutrition(recipeID):
+    # Query to retrieve nutritional information of ingredients in the recipe
+    query = f"""
+    SELECT SUM(I.calories) AS total_calories,
+           SUM(I.protein) AS total_protein,
+           SUM(I.carbs) AS total_carbs,
+           SUM(I.fat) AS total_fat,
+           SUM(I.cholesterol) AS total_cholesterol
+    FROM Amount A
+    JOIN Ingredient I ON A.ingredientName = I.name
+    WHERE A.recipeID = '{recipeID}'
+    """
+    nutrition_data = dao.retrieve(query)
 
+    # Extracting the calculated totals
+    totals = nutrition_data[0]
+
+    # Returning the totals as a dictionary
+    return {
+        'total_calories': totals['total_calories'],
+        'total_protein': totals['total_protein'],
+        'total_carbs': totals['total_carbs'],
+        'total_fat': totals['total_fat'],
+        'total_cholesterol': totals['total_cholesterol']
+    }
+
+@dietitians.route('/recipe_nutrition/<recipeID>', methods=['GET'])
+def recipe_nutrition(recipeID):
+    nutrition_totals = calculate_recipe_nutrition(recipeID)
+    return jsonify(nutrition_totals)
