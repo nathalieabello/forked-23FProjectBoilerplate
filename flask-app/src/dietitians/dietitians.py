@@ -242,6 +242,8 @@ def get_clients(username):
     data = dao.retrieve(query)
     return jsonify(data)
 
+
+
 # ### get, update, and delete clients from a Dietitian
 # @dietitians.route('/recipes/<recipe>/ingredients', methods=['GET', 'PUT', 'DELETE'])
 # def clients(recipeId):
@@ -252,3 +254,94 @@ def get_clients(username):
 #     """
 #     data = dao.retrieve(query)
 #     return jsonify(data)
+
+
+
+def get_diets():
+    query = f"""
+    SELECT dietName, recipeID
+    FROM Diet
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
+
+
+def add_diet(dietName, recipeID):
+    query = f"""
+    INSERT INTO Diet (dietName, recipeID)
+    VALUES ('{dietName}', {recipeID})
+    """
+    dao.execute(query)
+
+
+#### get and create diet from the db
+@dietitians.route('/diets', methods=['GET', 'POST'])
+def diets():
+    if request.method == 'GET':
+        return get_diets()
+    else:
+        name = request.json.get('dietName')
+        recipeid = request.json.get('recipeID')
+        add_diet(name, recipeid);
+        return 'Success'
+
+
+def get_diet(name):
+    query = f"""
+    SELECT dietName, recipeID
+    FROM Diet
+    WHERE dietName = '{name}'
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
+
+def remove_diet(name):
+    # Check if the ingredient exists (case-insensitive)
+    check_query = f"SELECT COUNT(*) FROM Diet WHERE LOWER(dietName) = LOWER('{name}')"
+    result = dao.execute_query(check_query)
+    exists = result.fetchone()[0]
+
+    if exists > 0:
+        # Ingredient exists, perform the deletion
+        delete_query = f"DELETE FROM Diet WHERE LOWER(dietName) = LOWER('{name}')"
+        dao.execute(delete_query)
+        return "Diet removed successfully."
+    else:
+        # Ingredient does not exist, handle accordingly (e.g., raise an exception)
+        return "Diet not found in the database."
+
+
+#### get, update, and delete recipe from the db
+@dietitians.route('/diet/<name>', methods=['GET', 'PUT', 'DELETE'])
+def diet(name):
+    if request.method == 'GET':
+        return get_diet(name)
+    else:
+        return remove_diet(name)
+
+def get_recipe_and_diets():
+    query = """
+    SELECT R.title AS recipeName, R.recipeID, R.cookTime, R.directions, D.dietName
+    FROM Recipe R
+    LEFT JOIN Diet D ON R.recipeID = D.recipeID
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
+
+@dietitians.route('/recipe_and_diets', methods=['GET'])
+def recipe_and_diets():
+    return get_recipe_and_diets()
+
+def get_recipe_and_ingredients(recipeID):
+    query = f"""
+    SELECT ingredientName, recipeID, servings, measurement
+    FROM Amount
+    WHERE recipeID = '{recipeID}'
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
+
+
+@dietitians.route('/recipe_and_ingredients/<recipeID>', methods=['GET'])
+def recipe_and_ingredients(recipeID):
+    return get_recipe_and_ingredients(recipeID)
