@@ -351,7 +351,9 @@ VALUES ('aniceberg', 'Aidan', 'Niceberg', '2002-07-28', '2023-11-02', 'aniceberg
        ('jdoe', 'John', 'Doe', '2000-12-25', '2023-06-07', 'jdoe@hotmail.com', '1212121212', 'M', '76 Alleghany Street',
         'MA', 'USA', '09876', 65, 140),
        ('janedoe', 'Jane', 'Doe', '2000-12-25', '2022-06-08', 'janedoe@hotmail.com', '2323232323', 'F',
-        '76 Alleghany Street', 'MA', 'USA', '09876', 55, 120);
+        '76 Alleghany Street', 'MA', 'USA', '09876', 55, 120),
+    ('defaultUser', 'John', 'Smith', '2000-01-01', '2002-01-01', 'default@gmail.com', '1111111111', 'M', 'Our House',
+     'MA', 'USA', '00000', 100, 100);
 
 INSERT INTO UserMedicalHistory
     (username, injury, occurred)
@@ -390,7 +392,8 @@ VALUES ('2023-02-15', 5000, 'aniceberg'),
        ('2023-05-21', 20000, 'ewiser'),
        ('2023-06-04', 7000, 'janedoe'),
        ('2023-03-07', 14000, 'jdoe'),
-       ('2023-10-10', 2500, 'mfontenot');
+       ('2023-10-10', 2500, 'mfontenot'),
+       ('2023-01-01', 2000, 'defaultUser');
 
 INSERT INTO DailyMacros
     (date, calorieCount, proteinCount, carbCount, fatCount, username)
@@ -400,7 +403,8 @@ VALUES ('2023-01-01', 2000, 100, 300, 50, 'aniceberg'),
        ('2023-04-15', 2100, 80, 250, 50, 'ewiser'),
        ('2023-05-20', 2400, 90, 225, 35, 'mfontenot'),
        ('2023-06-25', 3200, 105, 310, 55, 'janedoe'),
-       ('2023-07-30', 3600, 135, 450, 70, 'jdoe');
+       ('2023-07-30', 3600, 135, 450, 70, 'jdoe'),
+       ('2023-01-01', 3600, 135, 450, 70, 'defaultUser');
 
 INSERT INTO SleepInfo
     (datetimeStarted, datetimeEnded, REMTime, NREMTime, username)
@@ -412,18 +416,23 @@ VALUES ('2023-12-04 22:30:00', '2023-12-05 08:30:00', 1, 10, 'aniceberg'),
        ('2023-09-13 23:30:00', '2023-09-14 06:45:00', 4, 9, 'ewiser'),
        ('2023-08-06 01:15:00', '2023-08-06 11:00:00', 3, 7, 'mfontenot'),
        ('2023-08-12 23:15:00', '2023-08-13 07:45:00', 4, 8, 'janedoe'),
-       ('2023-09-25 22:45:00', '2023-09-26 08:15:00', 2, 10, 'jdoe');
+       ('2023-09-25 22:45:00', '2023-09-26 08:15:00', 2, 10, 'jdoe'),
+       ('2023-09-25 22:45:00', '2023-09-26 08:15:00', 2, 10, 'defaultUser');
 
 -- -- mock trainer data
 INSERT INTO PersonalTrainer
     (qualifiedSince, username)
 VALUES ('2021-07-28', 'aniceberg'),
-       ('2022-01-01', 'ewiser');
+       ('2022-01-01', 'ewiser'),
+       ('2001-01-01', 'defaultUser');
 
 INSERT INTO PersonalTrainerClient
     (trainerUsername, clientUsername)
 VALUES ('aniceberg', 'jdoe'),
-       ('aniceberg', 'janedoe');
+       ('aniceberg', 'janedoe'),
+       ('defaultUser', 'ewiser'),
+       ('defaultUser', 'jdoe'),
+       ('defaultUser', 'nabello');
 
 INSERT INTO Exercise
     (name, description)
@@ -453,13 +462,25 @@ VALUES (1, 'chest'),
 INSERT INTO Workout
     (name, trainerUsername)
 VALUES ('Aidan Workout 1', 'aniceberg'),
-       ('Aidan Workout 2 Upper Body', 'aniceberg');
+       ('Aidan Workout 2 Upper Body', 'aniceberg'),
+       ('workout 1', 'defaultUser'),
+       ('workout 2', 'defaultUser'),
+       ('workout 3', 'defaultUser');
 
 INSERT INTO WorkoutExercise
     (workoutId, exerciseId, sets, reps)
 VALUES (1, 1, 4, 8),
        (1, 2, 4, 6),
        (1, 3, 5, 8),
+       (3, 1, 4, 5),
+       (3, 2, 4, 5),
+       (3, 4, 4, 12),
+       (4, 1, 4, 5),
+       (4, 2, 4, 5),
+       (4, 4, 4, 12),
+       (5, 1, 4, 5),
+       (5, 2, 4, 5),
+       (5, 4, 4, 12),
        (2, 1, 4, 5),
        (2, 2, 4, 5),
        (2, 4, 4, 12);
@@ -467,16 +488,21 @@ VALUES (1, 1, 4, 8),
 INSERT INTO Session
     (trainerUsername, clientUsername, workoutId, date, duration)
 VALUES ('aniceberg', 'jdoe', 1, '2023-11-25', 60),
-       ('aniceberg', 'janedoe', 2, '2023-11-30', 45);
+       ('aniceberg', 'janedoe', 2, '2023-11-30', 45),
+       ('defaultUser', 'jdoe', 2, '2023-01-25', 70),
+       ('defaultUser', 'janedoe', 3, '2023-01-30', 45);
 
 -- -- mock dietitian data
 INSERT INTO Dietitian(qualifiedSince, username)
 VALUES ('2023-11-24', 'nabello'),
-       ('2023-10-01', 'jdoe');
+       ('2023-10-01', 'jdoe'),
+       ('2002-01-01', 'defaultUser');
 
 INSERT INTO DietitianClient(dietitianUsername, clientUsername)
 VALUES ('nabello', 'ewiser'),
-       ('jdoe', 'aniceberg');
+       ('jdoe', 'aniceberg'),
+       ('defaultUser', 'ewiser'),
+       ('defaultUser', 'aniceberg');
 
 INSERT INTO Ingredient(name, calories)
 VALUES ('tomato', 20);
@@ -532,12 +558,19 @@ INSERT INTO Influencer
     (followerCount, bio, username)
 VALUES ('100', 'Empowering lives through fitness', 'ewiser'),
        ('50', 'Passionate trainer & motivator. Transforming bodies, inspiring souls. #FitLife #WellnessWarrior',
-        'mfontenot');
+        'mfontenot'),
+    ('500', 'I love to workout',
+        'defaultUser');
 
 
 INSERT INTO InfluencerFollower (influencerusername, followerUsername)
 VALUES ('ewiser', 'janedoe'),
-       ('mfontenot', 'jdoe');
+       ('mfontenot', 'jdoe'),
+       ('defaultUser', 'ewiser'),
+       ('defaultUser', 'janedoe'),
+       ('defaultUser', 'jdoe'),
+       ('defaultUser', 'nabello')
+       ;
 
 INSERT INTO Brand (name)
 VALUES ('Nike'),
@@ -558,4 +591,10 @@ VALUES ('ewiser', 1),
        ('mfontenot', 1),
        ('mfontenot', 3),
        ('mfontenot', 5),
-       ('mfontenot', 4);
+       ('mfontenot', 4),
+       ('defaultUser', 4),
+       ('defaultUser', 5),
+       ('defaultUser', 3),
+       ('defaultUser', 2),
+       ('defaultUser', 1)
+       ;

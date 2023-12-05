@@ -37,6 +37,9 @@ def follower(username, followerUsername):
     elif request.method == 'DELETE':
         remove_follower(username, followerUsername)
 
+    # Add a return statement here
+    return 'Success'
+
 
 # get aggregate post interactions for a given influencer
 @influencers.route('/influencers/<username>/interactions', methods=['GET'])
@@ -49,7 +52,12 @@ def interactions(username):
     HAVING Posts.influencerUsername = '{username}'
     """
     data = dao.retrieve(query)
-    return jsonify(data)
+    totals = data[0]
+    return jsonify({
+            'totalComments': totals['totalComments'],
+            'totalLikes': totals['totalLikes'],
+            'totalShares': totals['totalShares']
+        })
 
 
 # get post interactions for a given influencer's post
@@ -146,3 +154,18 @@ def edit_influencer(username):
     elif request.method == 'DELETE':
         remove_influencer(username)
         return 'Success'
+
+
+## get incluencer bio
+@influencers.route('/influencers/<username>/bio', methods=['GET'])
+def get_influencer_bio(username):
+    query = f"""
+    SELECT bio FROM Influencer
+    WHERE username = '{username}'
+    """
+    data = dao.retrieve(query)
+
+    # Extract bio from the result
+    bio = data[0].get('bio', '')
+
+    return jsonify({'bio': bio})
