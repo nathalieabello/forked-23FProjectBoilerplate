@@ -113,3 +113,42 @@ def exercises():
     query = "SELECT * FROM Exercise"
     data = dao.retrieve(query)
     return jsonify(data)
+
+# Add a new exercise to the database
+@trainers.route('/trainers/exercises', methods=['POST'])
+def add_exercise():
+    name = request.json.get('name')
+    description = request.json.get('description')
+
+    query = f"""
+    INSERT INTO Exercise (name, description)
+    VALUES ('{name}', '{description}')
+    """
+    exercise_id = dao.insert(query)
+    return jsonify({"id": exercise_id, "name": name, "description": description}), 201
+
+
+# Update a specific exercise in the database
+@trainers.route('/trainers/exercises/<id>', methods=['PUT'])
+def update_exercise(id):
+    name = request.json.get('name')
+    description = request.json.get('description')
+
+    query = f"""
+    UPDATE Exercise
+    SET name = '{name}', description = '{description}'
+    WHERE id = {id}
+    """
+    dao.execute(query)
+    return 'Success'
+
+
+# Delete a specific exercise from the database
+@trainers.route('/trainers/exercises/<id>', methods=['DELETE'])
+def delete_exercise(id):
+    query = f"""
+    DELETE FROM Exercise
+    WHERE id = {id}
+    """
+    dao.execute(query)
+    return 'Success'
