@@ -72,6 +72,10 @@ def get_workout(username, id):
 
 # deletes a workout with the given id
 def remove_workout(username, id):
+    querySession = f"""
+    DELETE FROM Session
+    WHERE Session.workoutId = {id};
+    """
     queryExercises = f"""
     DELETE FROM WorkoutExercise
     WHERE WorkoutExercise.workoutId = {id};
@@ -80,8 +84,7 @@ def remove_workout(username, id):
     DELETE FROM Workout
     WHERE trainerUsername = '{username}' AND id = {id};
     """
-    query = f"{queryExercises}\n{queryWorkout}"
-    dao.execute(query)
+    dao.execute_multiple([querySession, queryExercises, queryWorkout])
 
 
 # given a trainer username and a workout, updates the workout

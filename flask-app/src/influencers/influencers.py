@@ -111,21 +111,20 @@ def remove_influencer(username):
     DELETE FROM InfluencerFollower
     WHERE influencerusername = '{username}';
     """
+    queryPosts = f"""
+    DELETE FROM Posts
+    WHERE influencerUsername = '{username}';
+    """
     queryVideos = f"""
     DELETE Video FROM Video
     JOIN Posts ON Video.id = Posts.videoId
     WHERE Posts.influencerUsername = '{username}';
     """
-    queryPosts = f"""
-    DELETE FROM Posts
-    WHERE influencerUsername = '{username}';
-    """
     queryInfluencer = f"""
     DELETE FROM Influencer
     WHERE username = '{username}';
     """
-    query = "\n".join([queryFollowers, queryVideos, queryPosts, queryInfluencer])
-    dao.execute(query)
+    dao.execute_multiple([queryFollowers, queryPosts, queryVideos, queryInfluencer])
 
 # updates an influencer's information
 def update_influencer(username, bio = None, followerCount = None):

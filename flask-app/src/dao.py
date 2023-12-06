@@ -35,6 +35,19 @@ def execute(query):
     cursor.execute(query)
     db.get_db().commit()
 
+# executes multiple SQL statements (passed as a list)
+# if any fail, all fail
+def execute_multiple(statements):
+    try:
+        connection = db.get_db()
+        cursor = connection.cursor()
+        for statement in statements:
+            cursor.execute(statement)
+    except Exception as e:
+        connection.rollback()
+        raise
+    connection.commit()
+
 """
 Inserts a single entity into the db and returns the id of the newly created entity
 """
