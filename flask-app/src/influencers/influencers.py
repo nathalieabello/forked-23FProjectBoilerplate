@@ -169,3 +169,37 @@ def get_influencer_bio(username):
     bio = data[0].get('bio', '')
 
     return jsonify({'bio': bio})
+
+@influencers.route('/brands', methods=['GET'])
+def get_brands():
+    query = "SELECT * FROM Brand"
+    brands = dao.retrieve(query)
+    return jsonify(brands)
+
+@influencers.route('/brands/<brand_name>', methods=['POST'])
+def add_brand(brand_name):
+    # Check if the brand already exists
+    brand_exists_query = f"SELECT name FROM Brand WHERE name = '{brand_name}'"
+    existing_brand = dao.retrieve(brand_exists_query)
+
+    if not existing_brand:
+        # If the brand does not exist, add it to the Brand table
+        add_brand_query = f"INSERT INTO Brand (name) VALUES ('{brand_name}')"
+        dao.execute(add_brand_query)
+        return 'Brand added successfully'
+    else:
+        return 'Brand already exists'
+
+@influencers.route('/brands/<brand_name>', methods=['DELETE'])
+def delete_brand(brand_name):
+    # Check if the brand exists
+    brand_exists_query = f"SELECT name FROM Brand WHERE name = '{brand_name}'"
+    existing_brand = dao.retrieve(brand_exists_query)
+
+    if existing_brand:
+        # If the brand exists, delete it from the Brand table
+        delete_brand_query = f"DELETE FROM Brand WHERE name = '{existing_brand[0]['name']}'"
+        dao.execute(delete_brand_query)
+        return 'Brand deleted successfully'
+    else:
+        return 'Brand not found'
