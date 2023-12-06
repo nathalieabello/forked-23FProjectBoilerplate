@@ -382,7 +382,8 @@ INSERT INTO Goal
 VALUES ('lose weight', 'in progress', 'jdoe'),
        ('gain weight', 'in progress', 'mfontenot'),
        ('increase mobility', 'achieved', 'nabello'),
-       ('sleep longer', 'in progress', 'ewiser');
+       ('sleep longer', 'in progress', 'ewiser'),
+       ('sleep longer', 'in progress', 'defaultUser');
 
 INSERT INTO DailySteps
     (date, stepCount, username)

@@ -542,9 +542,13 @@ VALUES ('Prioritize mental health through stress management techniques', 'in pro
        ('Prioritize mental health through stress management techniques', 'achieved', 'sparkes1'),
        ('Strive for a healthy work-life balance to reduce burnout', 'not started', 'mbeckitt85'),
        ('Achieve a consistent sleep routine for better rest', 'in progress', 'emion4'),
-       ('Strive for a healthy work-life balance to reduce burnout', 'not started', 'egillbanks5'),
-       ('Limit screen time before bedtime for improved sleep quality', 'achieved', 'lkenton12'),
-       ('Set realistic fitness goals for gradual and sustainable progress', 'achieved', 'scoysh83');
+       ('Strive for a healthy work-life balance to reduce burnout', 'not started', 'defaultUser'),
+       ('Set realistic fitness goals for gradual and sustainable progress', 'achieved', 'defaultUser'),
+       ('Limit screen time before bedtime for improved sleep quality', 'achieved', 'defaultUser'),
+       ('Limit processed and sugary foods for better health', 'in progress', 'defaultUser'),
+       ('Practice portion control to manage weight effectively', 'not started', 'defaultUser'),
+       ('Explore and adopt new forms of physical activity for variety', 'not started', 'defaultUser'),
+       ('Incorporate more fruits and vegetables into daily meals', 'achieved', 'defaultUser');
 
 INSERT INTO DailySteps (date, stepCount, username)
 VALUES ('2019-11-26', 23425, 'nabello'),
@@ -586,7 +590,22 @@ VALUES ('2019-11-26', 23425, 'nabello'),
        ('2008-12-23', 2057, 'tghirigori1c'),
        ('2011-08-22', 4307, 'ewiser'),
        ('2020-12-03', 15093, 'hhuggard21'),
-       ('2013-08-10', 27210, 'gphilip25');
+       ('2013-08-10', 27210, 'gphilip25'),
+       ('2019-11-26', 23425, 'defaultUser'),
+       ('2019-05-19', 7098, 'defaultUser'),
+       ('2020-05-20', 29019, 'defaultUser'),
+       ('2022-09-09', 662, 'defaultUser'),
+       ('2005-02-25', 19495, 'defaultUser'),
+       ('2016-05-26', 17542, 'defaultUser'),
+       ('2020-04-22', 9923, 'defaultUser'),
+       ('2011-10-12', 27474, 'defaultUser'),
+       ('2022-01-23', 10713, 'defaultUser'),
+       ('2021-11-08', 6224, 'defaultUser'),
+       ('2021-08-30', 13478, 'defaultUser'),
+       ('2017-12-28', 29144, 'defaultUser'),
+       ('2013-11-11', 26773, 'defaultUser'),
+       ('2013-06-19', 563, 'defaultUser'),
+       ('2005-04-27', 14846, 'defaultUser');
 
 INSERT INTO DailyMacros (date, calorieCount, proteinCount, carbCount, fatCount, username)
 VALUES ('2017-01-09', 2229, 77, 451, 194, 'mmacfarlane1f'),
@@ -628,7 +647,19 @@ VALUES ('2017-01-09', 2229, 77, 451, 194, 'mmacfarlane1f'),
        ('2010-06-29', 243, 45, 245, 185, 'lkenton12'),
        ('2021-03-01', 5998, 46, 280, 133, 'lmidghall14'),
        ('2011-04-14', 7030, 33, 356, 177, 'lkenton12'),
-       ('2016-10-11', 707, 2, 304, 158, 'tghirigori1c');
+       ('2016-10-11', 707, 2, 304, 158, 'tghirigori1c'),
+       ('2017-01-09', 2229, 77, 451, 194, 'defaultUser'),
+       ('2010-05-31', 328, 2, 488, 61, 'defaultUser'),
+       ('2006-01-03', 7495, 55, 55, 269, 'defaultUser'),
+       ('2009-03-14', 6046, 3, 261, 189, 'defaultUser'),
+       ('2022-11-17', 6324, 8, 227, 177, 'defaultUser'),
+       ('2009-07-11', 7530, 55, 155, 256, 'defaultUser'),
+       ('2018-03-26', 6491, 50, 321, 246, 'defaultUser'),
+       ('2022-08-24', 833, 77, 277, 161, 'defaultUser'),
+       ('2012-05-12', 4563, 9, 58, 1, 'defaultUser'),
+       ('2011-04-15', 900, 9, 97, 270, 'defaultUser'),
+       ('2006-02-04', 1305, 49, 296, 204, 'defaultUser'),
+       ('2018-12-10', 7934, 52, 407, 129, 'defaultUser');
 
 INSERT INTO SleepInfo (datetimeStarted, datetimeEnded, REMTime, NREMTime, username)
 VALUES ('2022-07-01 16:41:54', '2022-07-02 10:07:16', 1, 13, 'aniceberg'),
@@ -662,15 +693,26 @@ VALUES ('2022-07-01 16:41:54', '2022-07-02 10:07:16', 1, 13, 'aniceberg'),
        ('2010-05-06 09:43:13', '2010-05-07 02:25:15', 0, 4, 'gbunt88'),
        ('2010-05-06 22:54:35', '2010-05-07 04:08:36', 0, 12, 'bcapner1d'),
        ('2010-05-06 01:28:10', '2010-05-07 13:03:57', 0, 14, 'qsinkin27'),
-       ('2010-05-06 17:04:24', '2010-05-07 23:41:11', 3, 6, 'aniceberg'),
-       ('2010-05-06 07:29:25', '2010-05-07 16:52:09', 0, 11, 'cstrelitzer87'),
-       ('2010-05-06 03:15:45', '2010-05-07 18:57:14', 3, 13, 'bnapoleone20'),
-       ('2010-05-06 04:40:32', '2010-05-07 12:46:30', 1, 9, 'xmaldin8'),
-       ('2010-05-06 16:52:53', '2010-05-07 12:57:12', 1, 6, 'lgreguoli82'),
-       ('2010-05-06 03:49:01', '2010-05-07 03:51:52', 2, 4, 'bwhymark6'),
-       ('2010-05-06 14:09:56', '2010-05-07 05:39:40', 0, 3, 'lcanaan9'),
-       ('2010-05-06 06:04:52', '2010-05-07 12:15:31', 1, 9, 'drosenbaum1i'),
-       ('2010-05-06 09:55:37', '2010-05-07 21:05:54', 2, 3, 'wriba17');
+       ('2010-05-06 17:04:24', '2010-05-07 23:41:11', 3, 6, 'defaultUser'),
+       ('2010-05-06 07:29:25', '2010-05-07 16:52:09', 0, 11, 'defaultUser'),
+       ('2010-05-06 03:15:45', '2010-05-07 18:57:14', 3, 13, 'defaultUser'),
+       ('2010-05-06 04:40:32', '2010-05-07 12:46:30', 1, 9, 'defaultUser'),
+       ('2010-05-06 16:52:53', '2010-05-07 12:57:12', 1, 6, 'defaultUser'),
+       ('2010-05-06 03:49:01', '2010-05-07 03:51:52', 2, 4, 'defaultUser'),
+       ('2010-05-06 14:09:56', '2010-05-07 05:39:40', 0, 3, 'defaultUser'),
+       ('2010-05-06 06:04:52', '2010-05-07 12:15:31', 1, 9, 'defaultUser'),
+       ('2010-05-06 09:55:37', '2010-05-07 21:05:54', 2, 3, 'defaultUser'),
+       ('2022-07-01 16:41:54', '2022-07-02 10:07:16', 1, 13, 'defaultUser'),
+       ('2022-07-01 22:54:20', '2022-07-02 07:23:00', 3, 7, 'defaultUser'),
+       ('2022-07-01 02:36:29', '2022-07-02 01:30:41', 2, 3, 'defaultUser'),
+       ('2022-07-01 20:22:37', '2022-07-02 06:28:08', 3, 4, 'defaultUser'),
+       ('2022-07-01 03:07:31', '2022-07-02 11:58:42', 3, 9, 'defaultUser'),
+       ('2022-07-01 15:05:50', '2022-07-02 00:35:23', 2, 3, 'defaultUser'),
+       ('2022-07-01 03:58:46', '2022-07-02 07:46:32', 2, 13, 'defaultUser'),
+       ('2022-07-01 01:26:43', '2022-07-02 23:19:00', 3, 10, 'defaultUser'),
+       ('2022-07-01 10:30:18', '2022-07-02 00:15:30', 3, 9, 'defaultUser'),
+       ('2022-07-01 03:37:13', '2022-07-02 22:22:39', 0, 3, 'defaultUser'),
+       ('2022-05-01 07:14:17', '2022-01-01 05:22:43', 1, 5, 'defaultUser');
 
 
 -- Influencer mock data
@@ -1003,23 +1045,20 @@ VALUES ('bwhymark6', 'npratton1e'),
        ('sdowdalls', 'kblumson2u'),
        ('rgajewski3y', 'fhasluck3z'),
        ('janedoe', 'tviegas8a'),
-       ('ewiser', 'tghirigori1c'),
-       ('rgianulli20', 'cmogg1a'),
-       ('wriba17', 'njandl2a'),
-       ('xmaldin8', 'cdelascy1j'),
-       ('janedoe', 'ataverner16'),
-       ('kcharkham1v', 'hhuggard21'),
-       ('ewiser', 'etompkin1k'),
-       ('jitzhayek45', 'aashdown3l'),
-       ('astubbings2v', 'kmaclardie2d'),
-       ('xmaldin8', 'jkeyser3u'),
-       ('thigounet7', 'kbrewoodm'),
-       ('tbowlands1p', 'tjosskoviz2k'),
-       ('lparradiceq', 'kbrewoodm'),
-       ('ewiser', 'ataverner16'),
-       ('astubbings2v', 'nabello'),
-       ('jitzhayek45', 'rstrathe2e'),
-       ('rgajewski3y', 'tgauthorpp36');
+       ('defaultUser', 'tghirigori1c'),
+       ('defaultUser', 'cmogg1a'),
+       ('defaultUser', 'njandl2a'),
+       ('defaultUser', 'cdelascy1j'),
+       ('defaultUser', 'hhuggard21'),
+       ('defaultUser', 'etompkin1k'),
+       ('defaultUser', 'aashdown3l'),
+       ('defaultUser', 'kmaclardie2d'),
+       ('defaultUser', 'jkeyser3u'),
+       ('defaultUser', 'kbrewoodm'),
+       ('defaultUser', 'tjosskoviz2k'),
+       ('defaultUser', 'ataverner16'),
+       ('defaultUser', 'rstrathe2e'),
+       ('defaultUser', 'tgauthorpp36');
 
 INSERT INTO Brand (name)
 VALUES ('FitFusion'),
@@ -1459,7 +1498,25 @@ VALUES  ('tbowlands1p', 35),
  ('ebreadon3n', 7),
  ('bwhymark6', 30),
  ('greckus1k', 48),
- ('ebreadon3n', 63);
+ ('ebreadon3n', 63),
+ ('defaultUser', 57),
+ ('defaultUser', 27),
+ ('defaultUser', 61),
+ ('defaultUser', 43),
+ ('defaultUser', 16),
+ ('defaultUser', 12),
+ ('defaultUser', 29),
+ ('defaultUser', 42),
+ ('defaultUser', 36),
+ ('defaultUser', 49),
+ ('defaultUser', 56),
+ ('defaultUser', 27),
+ ('defaultUser', 15),
+ ('defaultUser', 60),
+ ('defaultUser', 7),
+ ('defaultUser', 30),
+ ('defaultUser', 48),
+ ('defaultUser', 63);
 
 -- Personal trainer mock data
 INSERT INTO PersonalTrainer (username, qualifiedsince)
@@ -1811,7 +1868,19 @@ VALUES ('abernaldo3k', 'swretham7z'),
        ('jgrinston2x', 'hhindrich1y'),
        ('jkeyser3u', 'rmarklund22'),
        ('kbrewoodm', 'fnial84'),
-       ('kcharkham1v', 'aalflat2s');
+       ('kcharkham1v', 'aalflat2s'),
+       ('defaultUser', 'cbrauningeri'),
+       ('defaultUser', 'jmoring2'),
+       ('defaultUser', 'lvobes15'),
+       ('defaultUser', 'wriba17'),
+       ('defaultUser', 'rmarklund22'),
+       ('defaultUser', 'rissitt0'),
+       ('defaultUser', 'bwyant1f'),
+       ('defaultUser', 'hsalandino1q'),
+       ('defaultUser', 'tviegas8a'),
+       ('defaultUser', 'hhindrich1y'),
+       ('defaultUser', 'fnial84'),
+       ('defaultUser', 'aalflat2s');
 
 # SELECT username
 # from PersonalTrainer;
@@ -2116,7 +2185,24 @@ INSERT INTO Workout(name, trainerUsername)
  ('Spin Sprint Spectacle', 'tgoakesj'),
  ('HIIT Haven Hoorah', 'alamke42'),
  ('Core Crusher Circus Celebration', 'bmccreery3r'),
- ('Zumba Zest Fiesta', 'htrimble3d');
+ ('Zumba Zest Fiesta', 'htrimble3d'),
+ ('HIIT Hype Hoedown Hoorah', 'defaultUser'),
+ ('Stability Ball Bonanza', 'defaultUser'),
+ ('Paddleboard Power Prowess Pageant', 'defaultUser'),
+ ('CrossFit Chaos Circuit', 'defaultUser'),
+ ('Booty Burn Bonfire Bash Bonanza', 'defaultUser'),
+ ('Pilates Precision Parade', 'defaultUser'),
+ ('Boot Camp Blitz', 'defaultUser'),
+ ('Agility Adventure Ascend Amazement', 'defaultUser'),
+ ('HIIT Harmony Hurricane', 'defaultUser'),
+ ('Resistance Band Rapture Rendezvous', 'defaultUser'),
+ ('Plyo Precision Party', 'defaultUser'),
+ ('Kickboxing Kombat Kinetics', 'defaultUser'),
+ ('Med Ball Mayhem Marathon', 'defaultUser'),
+ ('Capoeira Cardio Carnival', 'defaultUser'),
+ ('Kettlebell Khaos', 'defaultUser'),
+ ('Rowing Rhythm Revelry Riot', 'defaultUser'),
+ ('Warrior Yoga Wanderlust', 'defaultUser');
 
 
 INSERT INTO MuscleGroup(name)
@@ -2497,6 +2583,9 @@ VALUES
  (49, 'semimembranosus'),
  (10, 'calves');
 
+SELECT id
+FROM Workout;
+
 INSERT INTO WorkoutExercise (workoutid, exerciseid, sets, reps)
 VALUES (181, 26, 66, 73),
        (103, 7, 95, 80),
@@ -2619,7 +2708,18 @@ VALUES ('ewiser', 'cmcparlin30', 249, '2023-06-25', 37),
        ('mmacfarlane1f', 'thabble25', 5, '2022-12-26', 81),
        ('estorekw', 'bboytond', 47, '2023-01-17', 20),
        ('kgooderick1d', 'tjosskoviz2k', 77, '2023-10-30', 63),
-       ('tviegas8a', 'lparradiceq', 228, '2022-12-24', 99);
+       ('tviegas8a', 'lparradiceq', 228, '2022-12-24', 99),
+       ('defaultUser', 'ccurdellb', 190, '2023-01-20', 51),
+       ('defaultUser', 'mbeckitt85', 81, '2023-06-28', 80),
+       ('defaultUser', 'kcharkham1v', 292, '2023-04-23', 95),
+       ('defaultUser', 'egillbanks5', 40, '2023-03-02', 58),
+       ('defaultUser', 'omccheyne26', 73, '2023-03-09', 11),
+       ('defaultUser', 'aeggerton1y', 10, '2023-06-18', 56),
+       ('defaultUser', 'ccurdellb', 208, '2023-06-13', 87),
+       ('defaultUser', 'tshemmin1e', 83, '2023-07-15', 54),
+       ('defaultUser', 'lcanaan9', 226, '2023-07-25', 36),
+       ('defaultUser', 'lmidghall14', 40, '2023-02-27', 38),
+       ('defaultUser', 'hclemo1m', 232, '2023-06-29', 85);
 
 -- Dietitian mock data
 INSERT INTO Dietitian (qualifiedSince, username)
@@ -2945,7 +3045,20 @@ VALUES ('rmacdearmid23', 'alamke42'),
        ('jitzhayek45', 'rsedgemondp'),
        ('bwhymark6', 'eburdikin15'),
        ('rmacdearmid23', 'pculverhouse22'),
-       ('mizak41', 'kheifer2m');
+       ('mizak41', 'kheifer2m'),
+       ('defaultUser', 'rtalby2c'),
+       ('defaultUser', 'wriba17'),
+       ('defaultUser', 'vgisburne38'),
+       ('defaultUser', 'fnial84'),
+       ('defaultUser', 'chumbellh'),
+       ('defaultUser', 'sdowdalls'),
+       ('defaultUser', 'cmcparlin30'),
+       ('defaultUser', 'omccheyne26'),
+       ('defaultUser', 'wflather3j'),
+       ('defaultUser', 'rsiemens3x'),
+       ('defaultUser', 'mizak41'),
+       ('defaultUser', 'ogrindley14'),
+       ('defaultUser', 'pgiovanardi3f');
 
 INSERT INTO Recipe (title, directions, cookTime)
 VALUES ('alouette  potatoes',
@@ -3416,7 +3529,18 @@ VALUES ('ogrindley14', 'tghirigori1c', 46),
        ('etompkin1k', 'ataverner16', 34),
        ('mscoggan6', 'lparradiceq', 49),
        ('vfranzschoninger1s', 'pgiovanardi3f', 42),
-       ('lmillimoe2w', 'kfenge11', 12);
+       ('lmillimoe2w', 'kfenge11', 12),
+       ('defaultUser', 'jsemered2j', 2),
+       ('defaultUser', 'pgiovanardi3f', 50),
+       ('defaultUser', 'khaggerty3m', 46),
+       ('defaultUser', 'deastup28', 39),
+       ('defaultUser', 'kblumson2u', 17),
+       ('defaultUser', 'rsearl1g', 15),
+       ('defaultUser', 'qsinkin27', 32),
+       ('defaultUser', 'jsemered2j', 33),
+       ('defaultUser', 'jagett10', 39),
+       ('defaultUser', 'mmercey7', 21),
+       ('defaultUser', 'ebreadon3n', 30);
 
 INSERT INTO Amount (servings, ingredientName, recipeID, measurement)
 VALUES (6, 'Pasta - Fettuccine, Egg, Fresh', 27, 'half a box'),
