@@ -392,3 +392,15 @@ def calculate_recipe_nutrition(recipeID):
 def recipe_nutrition(recipeID):
     nutrition_totals = calculate_recipe_nutrition(recipeID)
     return jsonify(nutrition_totals)
+
+@dietitians.route('/dietitian_clients/<username>', methods=['GET'])
+def get_dietitian_clients(username):
+    query = f"""
+    SELECT GU.username, GU.firstName, GU.lastName, GU.birthday, GU.dateJoined,
+    GU.email, GU.phone, GU.sex, GU.street, GU.state, GU.zip, GU.country, GU.height, GU.weight
+    FROM GeneralUser GU
+    JOIN DietitianClient DC ON GU.username = DC.clientUsername
+    WHERE DC.dietitianUsername = '{username}'
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)

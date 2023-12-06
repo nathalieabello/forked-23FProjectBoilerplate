@@ -155,3 +155,15 @@ def delete_exercise(id):
     """
     dao.execute(query)
     return 'Success'
+
+@trainers.route('/trainer_clients/<username>', methods=['GET'])
+def get_trainer_clients(username):
+    query = f"""
+    SELECT GU.username, GU.firstName, GU.lastName, GU.birthday, GU.dateJoined,
+    GU.email, GU.phone, GU.sex, GU.street, GU.state, GU.zip, GU.country, GU.height, GU.weight
+    FROM GeneralUser GU
+    JOIN PersonalTrainerClient TC ON GU.username = TC.clientUsername
+    WHERE TC.trainerUsername = '{username}'
+    """
+    data = dao.retrieve(query)
+    return jsonify(data)
